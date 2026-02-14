@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>¿Quieres ser mi San Valentín? 💖</title>
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@300&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: "Poppins", sans-serif;
+                background: black;
+                color: white;
+                overflow-x: hidden;
+            }
+            h1,
+            p {
+                margin: 0;
+            }
+            /* INTRO */
+            .intro {
+                position: fixed;
+                inset: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                background: linear-gradient(to bottom, #000000, #1a0010);
+                z-index: 10;
+                opacity: 0; /* inicia invisible */
+                transform: translateY(50px); /* comienza abajo */
+                transition:
+                    opacity 1.5s ease,
+                    transform 1.5s ease;
+            }
+
+            .intro.show {
+                opacity: 1;
+                transform: translateY(0); /* se desliza a su posición */
+            }
+
+            .intro h1,
+            .intro p {
+                margin: 0;
+                color: white;
+                text-align: center;
+            }
+
+            /* CONTENIDO PRINCIPAL */
+            .main {
+                padding: 60px 20px;
+                text-align: center;
+                display: none;
+            }
+            /* SLIDESHOW */
+            .slideshow {
+                width: 90%;
+                max-width: 600px;
+                height: 350px;
+                margin: 40px auto;
+                border-radius: 20px;
+                overflow: hidden;
+                position: relative;
+            }
+            .slideshow img {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0;
+                transition:
+                    opacity 2s ease,
+                    transform 8s linear;
+            }
+            .slideshow img.active {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            /* BOTONES */
+            button {
+                padding: 10px 25px;
+                margin: 10px;
+                border: none;
+                border-radius: 30px;
+                font-size: 1rem;
+                cursor: pointer;
+            }
+            .yes {
+                background: white;
+                color: black;
+                transition:
+                    transform 0.3s ease,
+                    box-shadow 0.3s ease;
+            }
+            .yes.glow {
+                box-shadow:
+                    0 0 15px #ff4e8a,
+                    0 0 30px #ff4e8a;
+            }
+            .no {
+                background: #660033;
+                color: white;
+                position: relative;
+                transition:
+                    left 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+                    top 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+                    transform 0.3s ease;
+            }
+            /* CARTA */
+            .letter {
+                max-width: 600px;
+                margin: 30px auto;
+                background: rgba(255, 255, 255, 0.05);
+                padding: 30px;
+                border-radius: 15px;
+                display: none;
+                font-family: "Cormorant Garamond", serif;
+                font-size: 1.3rem;
+                line-height: 1.6;
+                animation: fadeIn 2s ease forwards;
+            }
+            /* PREGUNTA */
+            .question {
+                margin-top: 40px;
+                font-size: 2rem;
+                font-family: "Cormorant Garamond", serif;
+                opacity: 0;
+                transition: opacity 2s ease;
+            }
+            .buttons {
+                margin-top: 20px;
+                opacity: 0;
+                transition: opacity 2s ease;
+            }
+            .final-message {
+                margin-top: 30px;
+                font-size: 1.5rem;
+                display: none;
+                animation: fadeIn 2s ease forwards;
+            }
+            /* CORAZONES FLOTANDO */
+            .heart-float {
+                position: fixed;
+                bottom: -20px;
+                font-size: 20px;
+                animation: floatUp 4s linear forwards;
+                pointer-events: none;
+                z-index: 999;
+            }
+            @keyframes floatUp {
+                0% {
+                    transform: translateY(0) scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-110vh) scale(1.8);
+                    opacity: 0;
+                }
+            }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- INTRO -->
+        <div class="intro" id="intro" onclick="startExperience()">
+            <h1>Pst pssst! Hay algo que quiero preguntarte...</h1>
+            <p style="margin-top: 20px; font-size: 14px; opacity: 0.6">
+                (Toca la pantalla)
+            </p>
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="main" id="mainContent">
+            <!-- SLIDESHOW -->
+            <div class="slideshow">
+                <img src="foto1.jpg" class="active" />
+                <img src="foto2.jpg" />
+                <img src="foto3.jpg" />
+            </div>
+
+            <!-- CARTA -->
+            <button class="open-letter" onclick="openLetter()">
+                Abrir carta 💌
+            </button>
+            <div class="letter" id="letter">
+                Desde que llegaste a mi vida, todo se siente más bonito,<br />
+                más suave, más especial.<br /><br />
+                Me encanta tu ternura, tu forma de ver el mundo y la calma que
+                me transmites.<br /><br />
+                Y por eso hoy quiero preguntarte algo que me hace sonreír solo
+                de pensarlo...
+            </div>
+
+            <!-- PREGUNTA -->
+            <div class="question" id="question">
+                ¿Quieres ser mi San Valentín? ❤️
+            </div>
+            <div class="buttons" id="buttons">
+                <button class="yes" id="yesBtn" onclick="sayYes()">
+                    Sí, quiero 💖
+                </button>
+                <button class="no" id="noBtn">Lo estoy pensando 🙈</button>
+            </div>
+
+            <!-- MENSAJE FINAL -->
+            <div class="final-message" id="finalMessage">
+                Prometo hacer de ese día algo tan especial como tú ✨❤️
+            </div>
+        </div>
+
+        <script>
+            /* INTRO */
+            // Esperar 2 segundos antes de mostrar la intro
+            window.addEventListener("DOMContentLoaded", () => {
+                setTimeout(() => {
+                    document.getElementById("intro").classList.add("show");
+                }, 500);
+            });
+
+            function startExperience() {
+                const intro = document.getElementById("intro");
+                intro.style.opacity = "0";
+                intro.style.transform = "translateY(-50px)";
+                setTimeout(() => {
+                    intro.style.display = "none";
+                    document.getElementById("mainContent").style.display =
+                        "block";
+                }, 1500); // mismo tiempo que la transición
+            }
+
+            /* SLIDESHOW */
+            let slides = document.querySelectorAll(".slideshow img");
+            let index = 0;
+            setInterval(() => {
+                slides[index].classList.remove("active");
+                index = (index + 1) % slides.length;
+                slides[index].classList.add("active");
+            }, 5000);
+
+            /* CARTA */
+            function openLetter() {
+                document.getElementById("letter").style.display = "block";
+                setTimeout(() => {
+                    document.getElementById("question").style.opacity = "1";
+                    document.getElementById("buttons").style.opacity = "1";
+                }, 2000);
+            }
+
+            /* BOTONES */
+            const noBtn = document.getElementById("noBtn");
+            const yesBtn = document.getElementById("yesBtn");
+            let scale = 1;
+
+            function moveButtonRandom() {
+                const rect = noBtn.getBoundingClientRect();
+                noBtn.style.position = "fixed";
+                const buttonWidth = rect.width;
+                const buttonHeight = rect.height;
+                const maxX = window.innerWidth - buttonWidth - 20;
+                const maxY = window.innerHeight - buttonHeight - 20;
+                const x = Math.random() * maxX;
+                const y = Math.random() * maxY;
+                noBtn.style.left = x + "px";
+                noBtn.style.top = y + "px";
+
+                // Botón Sí crece y brilla
+                scale += 0.08;
+                if (scale <= 1.8) {
+                    yesBtn.style.transform = `scale(${scale})`;
+                    yesBtn.classList.add("glow");
+                }
+            }
+
+            // Interacciones
+            noBtn.addEventListener("mouseover", moveButtonRandom);
+            noBtn.addEventListener("touchstart", function (e) {
+                e.preventDefault();
+                moveButtonRandom();
+            });
+
+            /* BOTÓN SÍ */
+            function sayYes() {
+                document.getElementById("finalMessage").style.display = "block";
+                startHearts();
+                // Fondo se ilumina suavemente
+                document.body.style.transition = "background 2s ease";
+                document.body.style.background =
+                    "linear-gradient(135deg,#ff4e8a,#ff758c,#ff7eb3)";
+            }
+
+            /* CORAZONES */
+            function startHearts() {
+                const interval = setInterval(() => {
+                    const heart = document.createElement("div");
+                    heart.classList.add("heart-float");
+                    heart.innerHTML = "❤️";
+                    heart.style.left = Math.random() * 100 + "vw";
+                    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+                    heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+                    document.body.appendChild(heart);
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 4000);
+                }, 200);
+                setTimeout(() => {
+                    clearInterval(interval);
+                }, 5000);
+            }
+        </script>
+    </body>
+</html>
