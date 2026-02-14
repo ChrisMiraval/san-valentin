@@ -75,20 +75,18 @@
 }
 
 .slideshow img {
+    position: absolute;
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 👈 se ve completa */
+    object-fit: cover;
     object-position: center center;
     opacity: 0;
-    transition:
-        opacity 2s ease,
-        transform 8s linear;
+    transition: opacity 2s ease;
 }
 
-            .slideshow img.active {
-                opacity: 1;
-                transform: scale(1.1);
-            }
+.slideshow img.active {
+    opacity: 1;
+}
             /* BOTONES */
             button {
                 padding: 10px 25px;
